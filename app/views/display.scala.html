@@ -1,0 +1,71 @@
+@(firstname:String,middlename:String,lastname:String,username:String,mobile:Long,gender:String,hobbies:String)
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
+<link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+<script src="@routes.Assets.versioned(" javascripts/bootstrap.js ")" type="text/javascript"> </script>
+<script src="@routes.Assets.versioned("jquery/jquery-3.1.1.min.js")"> </script>
+
+
+@header()
+
+<div class="container" align="center" style="color:blue;">
+    <h2>Welcome @username ! </h2>
+</div>
+<br>
+<div id="Detailsdiv" class="container">
+    <h3 style="border: double; border-color: brown" align="center"><b>User Details</b></h3>
+    <form class="form-horizontal" style="border: double; border-color:orange;" method="post"
+          action="@routes.HomeController.index()">
+        <br>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="f-name">First-Name:</label>
+            <div class="col-sm-10">
+             <input type="text" class="form-control" id="f-name" name="firstname" value=@firstname readonly="readonly">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="m-name">Middle-Name:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="middlename" id="m-name" readonly="readonly" value=@middlename >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="l-name">Last-Name:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="l-name" name="lastname" value=@lastname readonly="readonly">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="gender">Gender:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="gender" name="gender" value=@gender readonly="readonly">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="hobby">Hobbies:</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" name="hobbies" id="hobby" readonly="readonly">
+                    @hobbies
+                </textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="phone">Contact:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="phone" name="mobile" value=@mobile readonly="readonly">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="u-name">User-Name:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="username" id="u-name" value="@username" readonly="readonly">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" id="button4" class="btn btn-success btn-block">LogOut</button>
+            </div>
+        </div>
+    </form>
+</div>
+
