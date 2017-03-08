@@ -1,15 +1,16 @@
 package controllers
 
 import javax.inject.Inject
+import play.api.cache
+import play.api.cache.CacheApi
 
 import play.api.data._
 import play.api.data.Forms._
 import play.api.mvc.{Action, Controller}
-import services.{Service, UserAuthentication, UserDetails}
+import services.{Service, UserAuthentication, UserDetails,HashingPassword}
 
 
-class LoginController @Inject() extends Controller {
-
+class LoginController @Inject()(cache : CacheApi) extends Controller {
   val userForm = Form(
     mapping(
       "username" -> text,
@@ -28,21 +29,15 @@ class LoginController @Inject() extends Controller {
         BadRequest("Something went wrong.")
       },
       value => {
-        def iterate(ls:List[UserDetails]):UserDetails= {
-          ls match {
-            case head :: tail if (value.username.equals(head.username) && value.password.equals(head.password)) => head
-            case head :: Nil if (value.username.equals(head.username) && value.password.equals(head.password)) => head
-            case head :: tail=>iterate(tail)
-            case Nil=>null
+        val keyUser: Option[UserDetails] = cache.get[UserDetails](value.username)
+        keyUser match {
+          case Some(result) if (value.username.equals(result.username) &&
+            HashingPassword.checkHash(value.password, result.password) == true) => {
+            Redirect(routes.DetailsController.default).withSession("username" -> result.username)
           }
+          case _ => Ok(views.html.login())
         }
-        val result=iterate(Service.list.toList)
-        if(result!=null)
-          Redirect(routes.DetailsController.default).withSession("username"->result.username)
-        else
-          Ok("Invalid Username or Password !!")
       }
-    )
-
+        )
   }
 }

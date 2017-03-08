@@ -18,7 +18,7 @@ class HomeController @Inject() extends Controller {
    * a path of `/`.
    */
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    Ok(views.html.index("Connectify - Portable WiFi.")).withNewSession
   }
 
   def getSignUp= Action {
@@ -29,12 +29,5 @@ class HomeController @Inject() extends Controller {
     Ok(views.html.login())
   }
 
- /* def getError=Action.async{
-    val err=new ErrorHandler
 
-      err.onClientError( request ,404,"Page Not Found").map(err=>
-      Ok(err)
-      )
-
-  }*/
 }

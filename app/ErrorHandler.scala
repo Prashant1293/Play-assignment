@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 class ErrorHandler extends HttpErrorHandler {
 
   def onClientError(request: RequestHeader, statusCode: Int, message: String) = {
+    println(message)
     Future.successful(
       Status(statusCode)("A client error occurred: " + message)
     )

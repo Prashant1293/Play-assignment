@@ -1,15 +1,16 @@
 package controllers
 
 import javax.inject.Inject
+import play.api.cache
+import play.api.cache.CacheApi
 
 import play.api.data._
 import play.api.data.Forms._
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.mvc.{Action, Controller}
-import services.UserDetails
-import services.Service
+import services.{UserDetails,Service,HashingPassword}
 
-class SignupController @Inject() extends Controller {
+class SignupController @Inject()(cache : CacheApi) extends Controller {
   //val mobileCheck: Mapping[String] = nonEmptyText(minLength = 10) .verifying("^(0|[1-9][0-9]*)$")
   val userForm = Form(
     mapping(
@@ -38,9 +39,15 @@ class SignupController @Inject() extends Controller {
       value => {
         if(value.mobile.toString().length==10) {
           if(value.password.equals(value.confirmPassword)) {
-            Service.list.append(value)
-            Console.println(Service.list)
-            Ok(views.html.login())
+            //Service.list.append(value)
+            //Console.println(Service.list)
+            val newObject=value.copy(password = HashingPassword.getHash(value.password), confirmPassword= HashingPassword.
+              getHash(value.confirmPassword))
+
+            cache.set(value.username, newObject)
+            //Service.list.append(value)
+            //Console.println(Service.list)
+            Redirect(routes.DetailsController.default).withSession("username" -> value.username)
           }
           else{
             BadRequest("Passwords Do Not Match.")
