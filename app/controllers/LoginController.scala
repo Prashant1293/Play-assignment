@@ -7,10 +7,10 @@ import play.api.cache.CacheApi
 import play.api.data._
 import play.api.data.Forms._
 import play.api.mvc.{Action, Controller}
-import services.{Service, UserAuthentication, UserDetails,HashingPassword}
+import services._
 
 
-class LoginController @Inject()(cache : CacheApi) extends Controller {
+class LoginController @Inject()(cache : CacheApi,cacheService: CacheTrait) extends Controller {
   val userForm = Form(
     mapping(
       "username" -> text,
@@ -29,7 +29,7 @@ class LoginController @Inject()(cache : CacheApi) extends Controller {
         BadRequest("Something went wrong.")
       },
       value => {
-        val keyUser: Option[UserDetails] = cache.get[UserDetails](value.username)
+        val keyUser: Option[UserDetails] = cacheService.getcache(value.username)
         keyUser match {
           case Some(result) if (value.username.equals(result.username) &&
             HashingPassword.checkHash(value.password, result.password) == true) => {
@@ -38,6 +38,6 @@ class LoginController @Inject()(cache : CacheApi) extends Controller {
           case _ => Ok(views.html.login())
         }
       }
-        )
+    )
   }
 }
