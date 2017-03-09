@@ -24,7 +24,31 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Your new application is ready.")
+      contentAsString(home) must include ("Connectify")
+    }
+
+  }
+
+  "HomeController" should {
+
+    "render the Signup page" in {
+      val home = route(app, FakeRequest(GET, "/signup")).get
+
+      status(home) mustBe OK
+      contentType(home) mustBe Some("text/html")
+      contentAsString(home) must include ("username")
+    }
+
+  }
+
+  "HomeController" should {
+
+    "render the Login page" in {
+      val home = route(app, FakeRequest(GET, "/login")).get
+
+      status(home) mustBe OK
+      contentType(home) mustBe Some("text/html")
+      contentAsString(home) must include ("password")
     }
 
   }
@@ -38,5 +62,18 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
     }
 
   }
+
+  "LoginController" should {
+
+    "render the Details page" in {
+      val home = route(app, FakeRequest(GET, "/login")).get
+
+      contentType(home) mustBe Some("text/html")
+      contentAsString(home) must include ("username")
+    }
+
+  }
+
+
 
 }

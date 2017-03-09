@@ -12,9 +12,9 @@ class IntegrationSpec extends PlaySpec with OneServerPerTest with OneBrowserPerT
 
     "work from within a browser" in {
 
-      go to ("http://localhost:" + port)
+      go to ("http://localhost:" + 9000)
 
-      pageSource must include ("Your new application is ready.")
+      pageSource must include ("<html>")
     }
   }
 }

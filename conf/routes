@@ -27,6 +27,6 @@ GET     /signup                     controllers.SignupController.default
 
 POST    /signup                     controllers.SignupController.store
 
-POST    /signin                      controllers.LoginController.check
+POST    /login                      controllers.LoginController.check
 
 GET     /profile                    controllers.DetailsController.default
