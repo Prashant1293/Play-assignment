@@ -30,3 +30,9 @@ POST    /signup                     controllers.SignupController.store
 POST    /login                      controllers.LoginController.check
 
 GET     /profile                    controllers.DetailsController.default
+
+GET     /maintenance               controllers.MaintenanceController.default
+
+GET      /suspend                  controllers.MaintenanceController.suspendUser(user:String)
+
+GET     /remove                  controllers.MaintenanceController.resumeUser(user:String)

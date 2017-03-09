@@ -14,14 +14,34 @@ class DetailsController @Inject()(cache : CacheApi,cacheService:CacheTrait) exte
 
   def default=Action{implicit request=>
     request.session.get("username").map { user =>
-      val keyUser: Option[UserDetails] = cacheService.getcache(user)
+      val keyUser: List[UserDetails] = cacheService.getCache("cache").toList.flatten
       Console.println(keyUser)
-      keyUser match {
-        case Some(result) if (user.equals(result.username))=>Ok(views.html.display(result.firstname,result.middlename,result.lastname,user,result.mobile,result.gender,result.hobbies))
-        case None =>Ok(views.html.display("","","","",0,"",""))
+      def iterate(ls:List[UserDetails]):UserDetails= {
+        ls match {
+          case head :: tail if (user.equals(head.username)) => head
+          case head :: tail=>iterate(tail)
+          case Nil=>null
+        }
       }
+      val result=iterate(keyUser)
+      if(result!=null){
+        if(result.isAdmin==false)
+          Ok(views.html.display("",result.firstname,result.middlename,result.lastname,user,
+            result.mobile,result.gender,result.hobbies))
+        else
+          Ok(views.html.display("Maintenance",result.firstname,result.middlename,result.lastname,user,
+            result.mobile,result.gender,result.hobbies))
+      }
+      else
+        Ok(views.html.display("","","","","",0,"",""))
+
+//      keyUser match {
+//        case Some(result) if (user.equals(result.username))=>Ok(views.html.display(result.firstname,result.middlename,
+//          result.lastname,user,result.mobile,result.gender,result.hobbies))
+//        case None =>Ok(views.html.display("","","","",0,"",""))
+//      }
     }.getOrElse {
-      Ok(views.html.display("","","","",0,"",""))
+      Ok(views.html.display("","","","","",0,"",""))
     }
   }
 }

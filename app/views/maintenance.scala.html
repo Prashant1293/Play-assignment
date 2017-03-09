@@ -1,0 +1,15 @@
+@import services.UserDetails
+@(username:String,users:List[UserDetails])
+@header()
+
+@for(user<-users){
+<tbody>
+<tr>
+    <td>@user.username</td>
+    <td><button class="btn"><a href="@routes.MaintenanceController.suspendUser(user.username)">Suspend</a></button></td>
+    <td><button class="btn"><a href="@routes.MaintenanceController.resumeUser(user.username)">Resume</a></button></td>
+</tr>
+</tbody><br>
+}
+</body>
+</html>

@@ -1,8 +1,10 @@
 package services
 
+import javax.inject.Inject
+import play.api.cache.CacheApi
 import org.mindrot.jbcrypt.BCrypt
 
-object HashingPassword {
+class HashingPassword @Inject()(cache: CacheApi) extends HashingTrait{
   def getHash(str: String) : String = {
     BCrypt.hashpw(str, BCrypt.gensalt())
   }

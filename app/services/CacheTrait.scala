@@ -2,6 +2,7 @@ package services
 
 trait CacheTrait {
 
-  def setcache(value:String,newObject:UserDetails)
-  def getcache(value:String):Option[UserDetails]
+  def setCache(value:String,newObject:UserDetails):Boolean
+  def getCache(value:String):Option[List[UserDetails]]
+  def removeCache(value:UserDetails):Boolean
 }
