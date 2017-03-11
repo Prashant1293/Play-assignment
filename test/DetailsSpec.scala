@@ -6,7 +6,7 @@ import org.scalatest._
 
 import scala.concurrent.Future
 import play.api.mvc._
-import controllers.ProfileController
+import controllers.DetailsController
 import services.{CacheTrait, UserDetails}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._

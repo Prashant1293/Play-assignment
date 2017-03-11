@@ -23,7 +23,7 @@ class MaintenanceSpec extends PlaySpec with OneAppPerTest with Results with Mock
       when(mockDataService.removeCache(UserDetails("","","","","","",0,"","","",false,false))) mustBe true
       val mockService = mock[HashingTrait]
       when(mockService.checkHash("","")) thenReturn true
-      val home = route(app, FakeRequest(POST, "/signin")).get
+      val home = route(app, FakeRequest(POST, "/login")).get
       status(home) equals 303
     }
 

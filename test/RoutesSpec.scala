@@ -11,9 +11,6 @@ import services.{CacheTrait, HashingTrait, UserDetails}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 
-/**
-  * Created by knoldus on 9/3/17.
-  */
 class RoutesSpec extends PlaySpec with OneAppPerTest with Results with MockitoSugar{
 
   "Maintenance Controller#default" should {
@@ -31,7 +28,7 @@ class RoutesSpec extends PlaySpec with OneAppPerTest with Results with MockitoSu
       when(mockDataService.removeCache(UserDetails("","","","","","",0,"","","",false,false))) mustBe true
       val mockService = mock[HashingTrait]
       when(mockService.checkHash("","")) thenReturn true
-      val home = route(app, FakeRequest(POST, "/signin")).get
+      val home = route(app, FakeRequest(POST, "/login")).get
       status(home) equals 303
     }
 

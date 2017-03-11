@@ -1,16 +1,17 @@
 package controllers
 
 import javax.inject.Inject
+
 import play.api.cache._
 import play.api.cache.CacheApi
 import play.api.Configuration
-import play.api.data._
+import play.api.data.{Form, _}
 import play.api.data.Forms._
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.mvc.{Action, Controller}
 import services._
 
-class SignupController @Inject()(cache : CacheApi,cacheService: CacheTrait,hashing:HashingTrait,
+class SignupController @Inject(cacheService: CacheTrait,hashing:HashingTrait,
                                  configuration: Configuration) extends Controller {
     val userForm = Form(
     mapping(
@@ -20,7 +21,7 @@ class SignupController @Inject()(cache : CacheApi,cacheService: CacheTrait,hashi
       "gender" -> text,
       "hobbies" -> text,
       "email"  -> text,
-      "mobile" ->  longNumber,
+      "mobile" -> number,
       "username" -> text,
       "password" -> text,
       "confirmPassword"->text,
@@ -28,6 +29,12 @@ class SignupController @Inject()(cache : CacheApi,cacheService: CacheTrait,hashi
       "isSuspend"->boolean
     )(UserDetails.apply)(UserDetails.unapply)
   )
+
+
+
+
+
+
   def default = Action {
     Console.println(Service.list)
     Ok(views.html.signup())

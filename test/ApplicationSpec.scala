@@ -63,16 +63,6 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
 
   }
 
-  "LoginController" should {
-
-    "render the Details page" in {
-      val home = route(app, FakeRequest(GET, "/login")).get
-
-      contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("username")
-    }
-
-  }
 
 
 

@@ -7,10 +7,11 @@ case class UserDetails(
                         gender:String,
                         hobbies:String,
                         email:String,
-                        mobile:Long,
+                        mobile: Long,
                         username:String,
                         password:String,
                         confirmPassword:String,
                         isAdmin :Boolean=false,
                         isSuspend :Boolean=false
                       )
+
