@@ -30,11 +30,8 @@ class MaintenanceController @Inject()(cache: CacheApi, cacheService: CacheTrait)
       }
     }
     val result=iterate(keyUser)
-    //cacheService.removeCache(user)
     if(result!=null){
-      //println(result)
       cacheService.removeCache(result)
-      //cacheService.setCache("cache",result.copy(isSuspend = true))
 
     }
     println(""+cacheService.getCache("cache").toList.flatten)
@@ -62,7 +59,6 @@ class MaintenanceController @Inject()(cache: CacheApi, cacheService: CacheTrait)
 
     if(result!=null){
       cacheService.removeCache(result)
-      //cacheService.setCache("cache",result.copy(isSuspend = false))
     }
     println(""+cacheService.getCache("cache").toList.flatten)
     request.session.get("username").map { user =>
@@ -70,9 +66,7 @@ class MaintenanceController @Inject()(cache: CacheApi, cacheService: CacheTrait)
     }.getOrElse {
       Ok(views.html.maintenance(user,cacheService.getCache("cache").toList.flatten))
     }
-    //Ok(views.html.maintenance(maybeUser))
-    //cacheService.setCache("cache",user)
-    //Ok("")
+
   }
 
 }

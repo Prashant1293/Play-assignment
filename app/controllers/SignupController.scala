@@ -1,18 +1,18 @@
 package controllers
 
 import javax.inject.Inject
-
-import play.api.cache._
-import play.api.cache.CacheApi
 import play.api.Configuration
-import play.api.data.{Form, _}
+import play.api.cache._
+import play.api.data._
 import play.api.data.Forms._
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.mvc.{Action, Controller}
 import services._
 
-class SignupController @Inject(cacheService: CacheTrait,hashing:HashingTrait,
-                                 configuration: Configuration) extends Controller {
+import scala.collection.mutable.ListBuffer
+
+class SignupController @Inject() (cache : CacheApi,cacheService : CacheTrait, hashing : HashingTrait,
+                                 configuration : Configuration) extends Controller {
     val userForm = Form(
     mapping(
       "firstname" -> nonEmptyText,
@@ -20,8 +20,8 @@ class SignupController @Inject(cacheService: CacheTrait,hashing:HashingTrait,
       "lastname" -> nonEmptyText,
       "gender" -> text,
       "hobbies" -> text,
-      "email"  -> text,
-      "mobile" -> number,
+      "email"  -> email,
+      "mobile" -> longNumber,
       "username" -> text,
       "password" -> text,
       "confirmPassword"->text,
@@ -30,13 +30,8 @@ class SignupController @Inject(cacheService: CacheTrait,hashing:HashingTrait,
     )(UserDetails.apply)(UserDetails.unapply)
   )
 
-
-
-
-
-
   def default = Action {
-    Console.println(Service.list)
+    Console.println("list wont get form values"+Service.list)
     Ok(views.html.signup())
   }
   def store = Action {implicit request =>

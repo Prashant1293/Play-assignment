@@ -11,7 +11,7 @@ case class UserDetails(
                         username:String,
                         password:String,
                         confirmPassword:String,
-                        isAdmin :Boolean=false,
-                        isSuspend :Boolean=false
+                        isAdmin :Boolean,
+                        isSuspend :Boolean
                       )
 

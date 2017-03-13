@@ -9,10 +9,10 @@ GET     /                           controllers.HomeController.index
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 # Linking The Signup Page With the signup route
-GET     /signup                    controllers.HomeController.getSignUp
+#GET     /signup                    controllers.HomeController.getSignUp
 
 # Linking The Login Page With the login route
-GET     /login                     controllers.HomeController.getLogin
+#GET     /login                     controllers.HomeController.getLogin
 
 # Map Bootstrap glyphicon resources from the /public folder to the /assets URL path
 GET     /assets/fonts/*file        controllers.Assets.at(path="/public",file)
@@ -27,6 +27,8 @@ GET     /signup                     controllers.SignupController.default
 
 POST    /signup                     controllers.SignupController.store
 
+GET     /login                    controllers.LoginController.default
+
 POST    /login                      controllers.LoginController.check
 
 GET     /profile                    controllers.DetailsController.default
@@ -36,3 +38,15 @@ GET     /maintenance               controllers.MaintenanceController.default
 GET      /suspend                  controllers.MaintenanceController.suspendUser(user:String)
 
 GET     /remove                  controllers.MaintenanceController.resumeUser(user:String)
+
+
+
+
+
+
+
+
+
+
+
+

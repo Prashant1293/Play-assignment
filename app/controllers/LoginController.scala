@@ -7,7 +7,7 @@ import play.api.cache.CacheApi
 import play.api.data._
 import play.api.data.Forms._
 import play.api.mvc.{Action, Controller}
-import services.{HashingTrait, _}
+import services._
 
 
 class LoginController @Inject()(cache : CacheApi,cacheService: CacheTrait,hashing:HashingTrait) extends Controller {
@@ -17,8 +17,9 @@ class LoginController @Inject()(cache : CacheApi,cacheService: CacheTrait,hashin
       "password" -> text
     )(UserAuthentication.apply)(UserAuthentication.unapply)
   )
+
   def default = Action {
-    Console.println(Service.list)
+    Console.println("list wont get Authentication values"+Service.list)
     Ok(views.html.login())
   }
 
@@ -49,13 +50,6 @@ class LoginController @Inject()(cache : CacheApi,cacheService: CacheTrait,hashin
           Ok(views.html.login())
 
 
-        //        keyUser match {
-//          case Some(result) if (value.username.equals(result.username) &&
-//            HashingPassword.checkHash(value.password, result.password) == true) => {
-//            Redirect(routes.DetailsController.default).withSession("username" -> result.username)
-//          }
-//          case _ => Ok(views.html.login())
-//        }
      }
     )
   }
